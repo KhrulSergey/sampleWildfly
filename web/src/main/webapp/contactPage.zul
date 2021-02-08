@@ -1,0 +1,30 @@
+<div viewModel="@id('vm') @init('com.khsa.javaee.ui.contact.ContactViewModel')">
+    <style src="/grid/filter/style.css"/>
+    <grid model="@load(vm.model)">
+        <auxhead sclass="category-center">
+            <auxheader label="ContactList" colspan="4"/>
+            <auxheader colspan="1">
+                <a href="/index.zul" label="Back to Index"/>
+            </auxheader>
+        </auxhead>
+        <columns>
+            <column hflex="2">FirstName</column>
+            <column hflex="2">MiddleName</column>
+            <column hflex="2">LastName</column>
+            <column hflex="2">PhoneNumber</column>
+            <column hflex="1">AddressLink</column>
+        </columns>
+        <template name="model">
+            <row>
+                <label value="@load(each.firstName)"/>
+                <label value="@load(each.middleName)"/>
+                <label value="@load(each.lastName)"/>
+                <label value="@load(each.phoneNumber)"/>
+                <a href="@load('/addressPage.zul?contactId='.concat(each.id))" label="View address"/>
+            </row>
+        </template>
+        <foot>
+            <footer span="6" class="footer_right" label="@load(vm.footer)"/>
+        </foot>
+    </grid>
+</div>

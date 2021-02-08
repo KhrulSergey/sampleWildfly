@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                            http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.2.xsd">
+    <changeSet author="khsa" id="2021-02-07-create-contact-table" context="development">
+        <createTable tableName="contact" schemaName="sample">
+            <column name="id" type="CHAR(36)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="firstName" type="VARCHAR(32)"/>
+            <column name="middleName" type="VARCHAR(32)"/>
+            <column name="lastName" type="VARCHAR(32)"/>
+            <column name="phoneNumber" type="VARCHAR(32)"/>
+            <column name="updated" type="DATETIME"/>
+        </createTable>
+        <createTable tableName="address" schemaName="sample">
+            <column name="id" type="CHAR(36)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="contactId" type="CHAR(36)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="postIndex" type="INT(0)"/>
+            <column name="city" type="VARCHAR(64)"/>
+            <column name="street" type="VARCHAR(64)"/>
+            <column name="house" type="VARCHAR(8)"/>
+            <column name="apartment" type="VARCHAR(32)"/>
+            <column name="updated" type="DATETIME"/>
+        </createTable>
+        <createTable tableName="contact_addresses" schemaName="sample">
+            <column name="contact_id" type="VARCHAR(255)">
+                <constraints nullable="false" foreignKeyName="fk_contact_addresses_contact_id" references="contact(id)"/>
+            </column>
+            <column name="address_id" type="VARCHAR(255)">
+                <constraints nullable="false" foreignKeyName="fk_contact_addresses_address_id" references="address(id)"/>
+            </column>
+        </createTable>
+        <addPrimaryKey
+                columnNames="contact_id, address_id"
+                constraintName="pk_contact_addresses"
+                schemaName="sample"
+                tableName="contact_addresses"
+                tablespace="A String"/>
+    </changeSet>
+</databaseChangeLog>
